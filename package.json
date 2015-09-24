@@ -1,0 +1,41 @@
+{
+    "name": "xls2xform",
+    "version": "0.1.0",
+    "description": "A nodejs wrapper for pyxform to convert XLSForm to xForm",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "grunt test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lykmapipo/xls2xform"
+    },
+    "keywords": [
+        "xForm",
+        "XLSForm",
+        "odk",
+        "data",
+        "convert"
+    ],
+    "author": "lykmapipo <lallyelias87@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lykmapipo/xls2xform/issues"
+    },
+    "dependencies": {
+        "async": "^1.4.2",
+        "lodash": "^3.10.1",
+        "python-shell": "^0.1.0",
+        "tmp": "0.0.27"
+    },
+    "devDependencies": {
+        "chai": "~1.10.0",
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "^0.11.2",
+        "grunt-contrib-watch": "~0.5.3",
+        "grunt-mocha-test": "^0.12.7",
+        "jshint-stylish": "^2.0.1",
+        "load-grunt-tasks": "^3.2.0",
+        "mocha": "^2.2.5"
+    }
+}
