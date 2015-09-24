@@ -63,6 +63,7 @@ module.exports = function(xlsFormPath, done) {
                 response = _.omit(response, 'message', 'code');
 
                 next(null, response);
+
             }
         ], done);
     }
