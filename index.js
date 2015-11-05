@@ -19,6 +19,89 @@ function fileExists(path, done) {
     });
 }
 
+function normalizenResponseError(response) {
+    //normalize response
+    response =
+        _.isArray(response) ? _.first(response) : response;
+
+    //reference response code
+    var code = response.code || 999;
+
+    //reference row
+    var row;
+
+    //reference response messsage
+    var message = response && response.message ? response.message : '';
+
+    //process no type error
+    if (message.search(/Question with no type/g) > 0) {
+        //obtain row information
+        row = _.first(message.match(/\[.*?\]/g));
+        if (row) {
+            row = row.replace(/\[(.*?)\]/g, '$1');
+            row = row.replace(/row/g, '').replace(/:/g, '').trim();
+        }
+
+        //process question 
+        var question =
+            message.replace(/Question with no type./g, '')
+            .replace(/\[.*?\]/g, '').replace(/u'/g, '"')
+            .replace(/'/g, '"').trim();
+        //parse question
+        question = JSON.parse(question);
+
+        //prepare message
+        message =
+            'Question with name ' + question.name + ' at row ' + row + ' has no associated type.';
+    }
+
+    //process Invalid question name error
+    if (message.search(/Invalid question name/g) > 0) {
+        //obtain row information
+        row = _.first(message.match(/\[.*?\]/g));
+        if (row) {
+            row = row.replace(/\[(.*?)\]/g, '$1');
+            row = row.replace(/row/g, '').replace(/:/g, '').trim();
+        }
+
+        //parse message
+        message =
+            message.replace(/\[(.*?)\]/g, '$1').replace(/row/, '')
+            .replace(/\d/g, '').replace(/:/, '')
+            .replace(/Names/, ' at row ' + row + '.Names').trim();
+
+    }
+
+    //process choices option with no name
+    if (_.startsWith(message, 'On the choices sheet there') || code === 101) {
+        //reset message
+        if (code === 101) {
+            message = _.first(response.warnings);
+        }
+
+        //obtain list
+        var list = _.first(message.match(/\[.*?\]/g));
+        if (list) {
+            list = list.replace(/\[(.*?)\]/g, '$1').split(':')[1].trim();
+        }
+
+        //parse message
+        message =
+            message.replace(/\[(.*?)\]/g, '')
+            .replace(/ there is a /, ', list ' + list + ' has an ').trim();
+    }
+
+    //if its error response
+    if (code !== 100) {
+        return new Error(message);
+    }
+
+    //else do nothing
+    else {
+        return null;
+    }
+}
+
 module.exports = function(xlsFormPath, done) {
     //check if XLSForm path provided
     if (!xlsFormPath || _.isFunction(xlsFormPath)) {
@@ -54,15 +137,13 @@ module.exports = function(xlsFormPath, done) {
             //process response
             function respond(response, next) {
 
-                response =
-                    _.isArray(response) ? _.first(response) : response;
+                var error = normalizenResponseError(response);
 
-                response.xform =
-                    fs.readFileSync(outputPath.name, 'utf-8');
-
-                response = _.omit(response, 'message', 'code');
-
-                next(null, response);
+                if (error) {
+                    next(error);
+                } else {
+                    fs.readFile(outputPath.name, 'utf-8', next);
+                }
 
             }
         ], done);

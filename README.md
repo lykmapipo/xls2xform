@@ -2,6 +2,8 @@ xls2xform
 ===========
 A nodejs wrapper for [pyxform](https://github.com/SEL-Columbia/pyxform) to convert [XLSForm](http://xlsform.org/) to [xForm](http://opendatakit.github.io/odk-xform-spec/).
 
+*Note!: There is an API break when migrating to version 1.0.0+. All warnings and error found during convertion are processed and returned. You will only use error first callback style `callback(error, xform)`*
+
 ## Installation
 - Installing [pyxform](https://github.com/SEL-Columbia/pyxform) globally
 ```sh
@@ -17,24 +19,13 @@ $ npm install --save xls2xform
 ```js
 var xls2xform = require('xls2xform');
 
-xls2xform.convert(<path_to_xlsform>, function(error, response){
-    //process warnings
-
-    //obtain xform
-    var xform = response.xform;    
+xls2xform.convert(<path_to_xlsform>, function(error, xform){
+    //process error if any
+    ...
+    //xform obtained from xlsform
+    var xform = xform;    
 });
 ```
-
-### Response Format
-```js
-{
-    xform:<xform>
-    warnings:[<warnings>],
-}
-```
-- `xform` XForm representation of XLSForm
-- `warnings` contains all warning found during convertion of XLSForm to XForm
-
 
 ## Testing
 
