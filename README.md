@@ -1,5 +1,8 @@
 xls2xform
 ===========
+
+[![Build Status](https://travis-ci.org/lykmapipo/xls2xform.svg?branch=master)](https://travis-ci.org/lykmapipo/xls2xform)
+
 A nodejs wrapper for [pyxform](https://github.com/SEL-Columbia/pyxform) to convert [XLSForm](http://xlsform.org/) to [xForm](http://opendatakit.github.io/odk-xform-spec/).
 
 *Note!: There is an API break when migrating to version 1.0.0+. All warnings and error found during convertion are processed and returned. You will only use error first callback style `callback(error, xform)`*
