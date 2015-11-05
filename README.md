@@ -25,8 +25,8 @@ var xls2xform = require('xls2xform');
 xls2xform.convert(<path_to_xlsform>, function(error, xform){
     //process error if any
     ...
-    //xform obtained from xlsform
-    var xform = xform;    
+    //use returned xform  
+    ...  
 });
 ```
 
