@@ -1,6 +1,7 @@
 'use strict';
 
 //dependencies
+var path = require('path');
 var _ = require('lodash');
 var fs = require('fs');
 var async = require('async');
@@ -129,6 +130,7 @@ module.exports = function(xlsFormPath, done) {
 
                 shell.run('xls2xform.py', {
                     mode: 'json',
+                    scriptPath: path.join(__dirname, 'python'),
                     args: [xlsFormPath, outputPath.name]
                 }, next);
 
