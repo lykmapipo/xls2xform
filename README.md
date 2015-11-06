@@ -22,7 +22,7 @@ $ npm install --save xls2xform
 ```js
 var xls2xform = require('xls2xform');
 
-xls2xform.convert(<path_to_xlsform>, function(error, xform){
+xls2xform(<path_to_xlsform>, function(error, xform){
     //process error if any
     ...
     //use returned xform  

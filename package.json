@@ -1,6 +1,6 @@
 {
     "name": "xls2xform",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A nodejs wrapper for pyxform to convert XLSForm to xForm",
     "main": "src/index.js",
     "scripts": {
@@ -14,6 +14,7 @@
         "xForm",
         "XLSForm",
         "odk",
+        "form",
         "data",
         "convert"
     ],
