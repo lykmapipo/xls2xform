@@ -30,6 +30,9 @@ xls2xform(<path_to_xlsform>, function(error, xform){
 });
 ```
 
+## TODOS
+- [ ] cross check meta definitions
+
 ## Testing
 
 * Clone this repository
