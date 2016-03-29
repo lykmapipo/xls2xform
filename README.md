@@ -19,6 +19,7 @@ $ npm install --save xls2xform
 ```
 
 ## Usage
+- Using system python
 ```js
 var xls2xform = require('xls2xform');
 
@@ -28,6 +29,19 @@ xls2xform(<path_to_xlsform>, function(error, xform){
     //use returned xform  
     ...  
 });
+```
+- Using custom python
+```js
+var xls2xform = require('xls2xform');
+
+xls2xform(<path_to_xlsform> , {
+        pythonPath: <path_to_custom_python>
+    }, function(error, xform) {
+        //process error if any
+        ...
+        //use returned xform  
+        ...
+    });
 ```
 
 ## TODOS

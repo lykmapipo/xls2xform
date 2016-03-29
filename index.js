@@ -103,7 +103,7 @@ function normalizenResponseError(response) {
     }
 }
 
-module.exports = function(xlsFormPath, done) {
+module.exports = exports = function(xlsFormPath, options, done) {
     //check if XLSForm path provided
     if (!xlsFormPath || _.isFunction(xlsFormPath)) {
         done = xlsFormPath;
@@ -116,6 +116,12 @@ module.exports = function(xlsFormPath, done) {
     //continue with conversion
     else {
 
+        //normalize arguments
+        if (options && _.isFunction(options)) {
+            done = options;
+            options = {};
+        }
+
         //generate temp output path in os temporary directory
         var outputPath = tmp.fileSync(Date.now() * (Math.random() * 9));
 
@@ -127,12 +133,14 @@ module.exports = function(xlsFormPath, done) {
 
             //convert
             function convert(next) {
-
-                shell.run('xls2xform.py', {
+                //merge options
+                options = _.merge({}, options, {
                     mode: 'json',
                     scriptPath: path.join(__dirname, 'python'),
                     args: [xlsFormPath, outputPath.name]
-                }, next);
+                });
+
+                shell.run('xls2xform.py', options, next);
 
             },
 

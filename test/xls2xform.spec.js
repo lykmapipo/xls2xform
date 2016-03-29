@@ -49,6 +49,20 @@ describe('xls2xform', function() {
         });
     });
 
+    it('should be able to convert XLSForm to xForm using custom python', function(done) {
+        xls2xform(simpleXlsForm, {
+            pythonPath: '/usr/bin/python'
+        }, function(error, xform) {
+
+            expect(error).to.not.exist;
+
+            expect(xform.substring(0, 14))
+                .to.be.equal(fs.readFileSync(simpleXForm, 'utf-8').substring(0, 14));
+
+            done(error, xform);
+        });
+    });
+
     describe('survey worksheet', function() {
         describe('header errors', function() {
             /*jshint quotmark:false*/
